@@ -2,7 +2,6 @@
 using namespace std;
 
 int main(){
-
     int res=4, proc=5, finish[proc]={ };
     int available[res] = {1, 5, 2, 0};
     int allocation[proc][res] = {
