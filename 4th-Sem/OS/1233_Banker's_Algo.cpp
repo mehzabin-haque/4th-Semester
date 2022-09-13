@@ -2,7 +2,8 @@
 using namespace std;
 
 int main(){
-    int res=4, proc=5, finish[proc]={ };
+    int res=4, proc=5;
+    int finish[proc]={ }, ans[proc]={-1}, m=0, need[proc][res];
     int available[res] = {1, 5, 2, 0};
     int allocation[proc][res] = {
                         {0, 0, 1, 2},
@@ -17,8 +18,6 @@ int main(){
                     {2, 3, 5, 6},
                     {0, 6, 5, 2},
                     {0, 6, 5, 6}};
-
-    int need[proc][res];
 
     for(int i=0;i<proc;i++){
         for(int j=0;j<res;j++){
@@ -39,8 +38,6 @@ int main(){
     for(int i=0; i<proc; i++){
         finish[proc]=0;
     }
-
-    int ans[proc]={-1}, m=0;
 
     for(int k=1;k<=3;k++){
         for(int i=0;i<proc;i++){
