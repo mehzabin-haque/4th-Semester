@@ -58,6 +58,7 @@ void *writer(void *numW){
     sem_post(&resource);   
 
     //<CRITICAL Section>
+    count = count*2 ;
     printf(" Writer %d has updated the value to %d\n",(*((int* )numW)),count);
     //resource.V();                
     sem_post(&resource);
