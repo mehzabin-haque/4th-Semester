@@ -5,7 +5,7 @@
 int readCount=5,readNum=0;
 sem_t write;
 pthread_mutex_t mutex;
-int numPr_Cs[10] = {1,23,5,63,14,54,9,11,8,48}; 
+int numPr_Cs[10] = {1,2,3,4,5,6,7,8,9,10}; 
 
 void *writer(void *numW){
  sem_wait(&write);

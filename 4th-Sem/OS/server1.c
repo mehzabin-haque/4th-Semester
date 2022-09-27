@@ -23,18 +23,41 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#define MYPORT 5050    // the port users will be connecting to
+#define MYPORT 7070    // the port users will be connecting to
 #define BACKLOG 10     // how many pending connections queue will hold
 #define MAXDATASIZE 256 // max number of bytes we can get at once 
 
 
 int main(void)
 {
+
+    	
+    int pid = fork();
+
+	if (pid < 0) {
+           exit(EXIT_FAILURE);
+	} 
+
+	else if (pid > 0) {
+           exit(EXIT_SUCCESS);
+	 }
+
+ 	umask(0);
+
+        int sid = setsid();
+    	if (sid < 0) {
+           exit(EXIT_FAILURE);
+	}
+
+	if ((chdir("/")) < 0) {
+	    exit(EXIT_FAILURE);
+	}
+	
     int sockfd, new_sockfd;        // listen on sockfd, new connection on new_sockfd
     struct sockaddr_in my_addr;    // my address information
     struct sockaddr_in their_addr; // connector's address information
     char buffer[MAXDATASIZE];
-    int sin_size;
+    int sin_size; //WHAT IS THIS
 
     if ((sockfd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         perror("ERROR opening socket"); exit(1);  }
@@ -51,21 +74,26 @@ int main(void)
     if (listen(sockfd, BACKLOG) < 0) {
         perror("ERROR on listen"); exit(1); }
 
-    sin_size = sizeof(struct sockaddr_in);
-    if ((new_sockfd = accept(sockfd, (struct sockaddr *)&their_addr, &sin_size)) < 0) {
-        perror("ERROR on accept"); exit(1);  }
-    printf("server: got connection from %s\n",inet_ntoa(their_addr.sin_addr));
+    while(1)
+    {
+    	    fork();
+	    sin_size = sizeof(struct sockaddr_in);
+	    if ((new_sockfd = accept(sockfd, (struct sockaddr *)&their_addr, &sin_size)) < 0) {
+		perror("ERROR on accept"); exit(1);  }
+	    printf("server: got connection from %s\n",inet_ntoa(their_addr.sin_addr));
 
-    bzero(buffer,MAXDATASIZE);
-    if (read(new_sockfd,buffer,MAXDATASIZE-1) < 0) {
-        perror("ERROR reading from socket"); exit(1);  }
-    printf("Here is the message: %s\n",buffer);
+	    bzero(buffer,MAXDATASIZE);
+	    if (write(new_sockfd, "Please enter your message:", 27) < 0) {
+		perror("ERROR writing to socket"); exit(1);  }
 
-    if (write(new_sockfd, "I got your message", 18) < 0) {
-        perror("ERROR writing to socket"); exit(1);  }
+	    if (read(new_sockfd,buffer,MAXDATASIZE-1) < 0) {
+		perror("ERROR reading from socket"); exit(1);  }
+	    printf("Here is the message: %s\n",buffer);
 
-    close(new_sockfd);  
-    close(sockfd);      
-    return 0;
+	    if (write(new_sockfd, "I got your message", 18) < 0) {
+		perror("ERROR writing to socket"); exit(1);  }
+	    close(new_sockfd);  
+    }
+
+   close(sockfd);      
 }
-
