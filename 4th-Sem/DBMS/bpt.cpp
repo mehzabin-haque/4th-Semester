@@ -1,5 +1,7 @@
 #include<bits/stdc++.h>
+#include <chrono>
 using namespace std;
+using namespace chrono;
 int n,mx; //number of child;
 struct mystruct
 {
@@ -136,8 +138,9 @@ void insertLeaf(string english,string bangla)
 
 int main(void)
 {
-	//cout << "number of Child:" << endl;
-	n=3;
+	// cout << "number of Child:" << endl;
+	// cin >> n;
+    n=5500;
 	mx=n;
     root = createNode();
     mystruct *leaf;
@@ -145,7 +148,7 @@ int main(void)
     string english,bangla,searchEnglish;
     ifstream ifile;
     ifile.open("word.txt");
-    if(!ifile) return 0;
+    if(!ifile) cout << "aaaaaa";
     while(ifile>>english)
     {
     	getline(ifile,bangla);
@@ -154,11 +157,19 @@ int main(void)
     cout<<"enter text to search: ";
     while(cin>>searchEnglish)
     {
-    	 leaf= findLeaf(root,searchEnglish);
+    	 auto start = high_resolution_clock::now();
+         leaf= findLeaf(root,searchEnglish);
     	 for(i=0; i<leaf->currentNode; i++) if(searchEnglish==leaf->english[i]) break;
     	 if(i==leaf->currentNode) cout<<"no word founds\n";
-    	 else cout<<searchEnglish<<" "<<leaf->bangla[i]<<endl;
+    	 else cout<<searchEnglish<<": "<<leaf->bangla[i]<<endl;
+         auto stop = high_resolution_clock::now();
+         auto duration = duration_cast<microseconds>(stop-start);
+         cout<<"Time taken to search (in microseconds): "<<duration.count()<<endl;
+         if(searchEnglish == "Exit"){
+            break;
+         }
     	 cout<<"enter text to search: ";
+         
     }
 
 
