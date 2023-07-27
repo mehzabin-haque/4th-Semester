@@ -4,18 +4,18 @@ This repository contains my coursework for the 4th semester, covering three esse
 
 ## Courses and Projects
 
-1. ## Database Management System (DBMS) 
+### 1.Database Management System (DBMS) 
    - Implemented a high-performance B+ tree for the dictionary, handling extensive test cases (approx. 1 lakh).
     
 
-2. ## Information Security (IS)
+### 2.Information Security (IS)
    - Encryption Algorithms: Implemented AES with single and multiple keys for robust data encryption.
    - Classic Ciphers: Developed code for monoalphabetic cipher and polyalphabetic cipher.
    - Polyalphabetic Cipher with Key: Implemented a stronger version of the polyalphabetic cipher with user-defined keys.
    - SHA-512 Code: Implemented SHA-512 hashing algorithm for secure data hashing.
    
 
-3. ## Operating System (OS)
+### 3.Operating System (OS)
    - Process Synchronization: Code for ensuring process synchronization and avoiding conflicts.
    - Banker's Algorithm: Implemented the Banker's algorithm for safe resource allocation.
    - Dining Philosophers: Developed code to solve the classic dining philosophers problem.
